@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.controller.response;
+package dongwoongkim.springbootboard.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

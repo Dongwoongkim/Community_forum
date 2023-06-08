@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.service;
 
+import dongwoongkim.springbootboard.exception.ValidateTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -87,8 +88,7 @@ public class TokenService implements InitializingBean {
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
         }
-
-        return false;
+        throw new ValidateTokenException("비정상적인 시도입니다.");
     }
 
 }

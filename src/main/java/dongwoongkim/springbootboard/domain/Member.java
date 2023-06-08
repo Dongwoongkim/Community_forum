@@ -22,6 +22,8 @@ public class Member extends BaseEntity {
     private String username;
     private String password;
     private String nickname;
+
+    @Column(unique = true)
     private String email;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRole> roles;
