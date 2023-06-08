@@ -77,8 +77,4 @@ public class SignService {
         }
     }
 
-    public MemberResponseDto getMemberWithAuthoritiesForUser() {
-        return MemberResponseDto.toDto(SecurityUtil.getCurrentUsername()
-                .flatMap(memberRepository::findOneWithRolesByUsername).orElse(null));
-    }
 }
