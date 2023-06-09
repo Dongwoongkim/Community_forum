@@ -1,7 +1,9 @@
 package dongwoongkim.springbootboard.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
+@ApiModel(value = "로그인 응답")
 @Data
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

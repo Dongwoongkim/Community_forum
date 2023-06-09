@@ -50,7 +50,6 @@ public class SignService {
     }
 
     public LogInResponseDto signIn(LoginRequestDto loginRequestDto) {
-        // userpasswordToken 생성
         String jwt = jwtLoginRequest(loginRequestDto);
         return LogInResponseDto.toDto(jwt);
     }
@@ -58,10 +57,12 @@ public class SignService {
     private String jwtLoginRequest(LoginRequestDto loginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        String jwt = tokenService.createToken(authentication);
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken); // loadUserByUsername 메소드 실행
 
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        // 토큰 생성 및 리턴
+        String jwt = tokenService.createAccessToken(authentication);
         if (!StringUtils.hasText(jwt)) {
             throw new LoginFailureException("로그인에 실패하였습니다.");
         }

@@ -2,11 +2,14 @@ package dongwoongkim.springbootboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dongwoongkim.springbootboard.domain.Member;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+@ApiModel(value = "회원조회 응답")
 @Data
 @Builder
 @AllArgsConstructor

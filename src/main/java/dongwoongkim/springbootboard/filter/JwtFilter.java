@@ -25,20 +25,26 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String jwt = extractTokenFromRequest(httpServletRequest);
 
-        // 헤더에서 Authorization 따오기
-        String Bearer_token = httpServletRequest.getHeader(AUTHORIZAITON_HEADER);
-        String jwt = resolveToken(Bearer_token);
-
-        if (StringUtils.hasText(jwt) && tokenService.validateToken(jwt)) {
+        if (validateAccessToken(jwt)) {
             Authentication authentication = tokenService.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("인증 정보를 Security Context에 저장했습니다.");
         } else {
             log.debug("JWT가 유효하지 않습니다.");
         }
-
         chain.doFilter(request,response);
+    }
+
+    private boolean validateAccessToken(String jwt) {
+        return StringUtils.hasText(jwt) && tokenService.validateToken(jwt);
+    }
+
+    private String extractTokenFromRequest(HttpServletRequest httpServletRequest) {
+        String Bearer_token = httpServletRequest.getHeader(AUTHORIZAITON_HEADER);
+        String jwt = resolveToken(Bearer_token);
+        return jwt;
     }
 
     private String resolveToken(String bearer_token) {
@@ -46,7 +52,6 @@ public class JwtFilter extends GenericFilterBean {
             log.info("검증중");
             return bearer_token.substring(7);
         }
-        log.info("검증실패");
         return null;
     }
 }

@@ -4,18 +4,21 @@ import dongwoongkim.springbootboard.domain.Member;
 import dongwoongkim.springbootboard.exception.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Component
+@Slf4j
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
@@ -23,8 +26,8 @@ public class MemberDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> member = Optional.ofNullable(memberRepository.findOneWithRolesByUsername(username).
-                orElseThrow(() -> new MemberNotFoundException("DB에서 회원정보와 일치하는 회원을 찾을 수 없습니다.")));
-
+                orElseThrow(() -> new MemberNotFoundException("DB에서 아이디와 일치하는 회원을 찾을 수 없습니다.")));
+        log.info("loadUserByUsername executed.");
         return createUser(username, member.get());
     }
 

@@ -19,10 +19,11 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
+    @Column(unique = true)
     private String nickname;
-
     @Column(unique = true)
     private String email;
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)

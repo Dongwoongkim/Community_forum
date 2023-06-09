@@ -1,6 +1,7 @@
 package dongwoongkim.springbootboard.service;
 
 import dongwoongkim.springbootboard.dto.MemberResponseDto;
+import dongwoongkim.springbootboard.exception.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,17 @@ public class MemberService {
 
     public MemberResponseDto getMemberWithAuthoritiesForUser() {
         return MemberResponseDto.toDto(SecurityUtil.getCurrentUsername()
-                .flatMap(memberRepository::findOneWithRolesByUsername).orElse(null));
+                .flatMap(memberRepository::findOneWithRolesByUsername).orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
+    }
+
+    public MemberResponseDto getMemberWithAuthoritiesForAdmin(Long id) {
+        return MemberResponseDto.toDto(memberRepository.findOneWithRolesById(id)
+                .orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
     }
 
     @Transactional
     public void delete(Long id) {
-        memberRepository.deleteById(id);
+        memberRepository.delete(
+                memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
     }
 }

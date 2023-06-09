@@ -1,10 +1,12 @@
 package dongwoongkim.springbootboard.config;
+import dongwoongkim.springbootboard.service.MemberDetailsService;
 import dongwoongkim.springbootboard.service.TokenService;
 import dongwoongkim.springbootboard.handler.JwtAccessDeniedHandler;
 import dongwoongkim.springbootboard.handler.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +20,7 @@ public class SecurityConfig {
     private final TokenService tokenService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final MemberDetailsService memberDetailsService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -32,8 +35,8 @@ public class SecurityConfig {
                 .exceptionHandling()  // 예외 처리 핸들러 등록
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-
                 .and()
+
                 .headers()
                 .frameOptions()
                 .sameOrigin()
@@ -46,12 +49,16 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/home").permitAll() // 접근가능
-                .antMatchers("/signin").permitAll() // 로그인
-                .antMatchers("/signup").permitAll() // 회원가입
-                .anyRequest().permitAll()
+                .antMatchers("/login").permitAll() // 로그인
+                .antMatchers("/sign-up").permitAll() // 회원가입
+                .antMatchers(HttpMethod.DELETE,"/member/{id}/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/swagger-uri/**","/swagger-resources/**").permitAll()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenService)); // JWT 필터 등록
+                    .userDetailsService(memberDetailsService)
+                    .apply(new JwtSecurityConfig(tokenService));// JWT 필터 등록
+
+
 
         return http.build();
     }

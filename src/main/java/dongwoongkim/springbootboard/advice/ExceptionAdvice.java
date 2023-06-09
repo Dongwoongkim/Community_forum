@@ -60,4 +60,17 @@ public class ExceptionAdvice {
     public Response inputFormException(ValidateTokenException e) {
         return Response.failure(406, "비정삭적인 시도입니다.");
     }
+
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Response accessDeniedException(AccessDeniedException e) {
+        return Response.failure(401, "접근 불가능한 권한 입니다.");
+    }
+
+    @ExceptionHandler(AuthenticationEntryPointException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Response authenticationEntryPointException(AuthenticationEntryPointException e) {
+        return Response.failure(403, "인증되지 않은 사용자입니다.");
+    }
 }
