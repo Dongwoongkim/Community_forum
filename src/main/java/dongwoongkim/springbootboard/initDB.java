@@ -1,23 +1,28 @@
 package dongwoongkim.springbootboard;
 
-import dongwoongkim.springbootboard.domain.Member;
-import dongwoongkim.springbootboard.domain.Role;
-import dongwoongkim.springbootboard.domain.RoleType;
+import dongwoongkim.springbootboard.domain.category.Category;
+import dongwoongkim.springbootboard.domain.member.Member;
+import dongwoongkim.springbootboard.domain.role.Role;
+import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.RoleNotFoundException;
+import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategory;
+import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategoryWithName;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +31,9 @@ public class initDB {
 
     private final MemberRepository memberRepository;
     private final RoleRepository roleRepository;
+    private final CategoryRepository categoryRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
@@ -34,6 +41,7 @@ public class initDB {
         initRoles();
         initAdmin();
         initMember();
+        initCategory();
     }
 
     @Transactional
@@ -57,6 +65,15 @@ public class initDB {
                 "rlaehddnd", passwordEncoder.encode( "dhjrnfma1234!!"), "dongwoongkim", "rlaehddnd0422@naver.com",
                 List.of(roleRepository.findByRoleType(RoleType.USER).orElseThrow(RoleNotFoundException::new)
                 )));
+    }
+
+    @Transactional
+    public void initCategory() {
+        // 1     NULL
+        // 2      1
+        List<Category> categories = new ArrayList<>();
+        Category category1 = categoryRepository.save(createCategoryWithName("category1"));
+        Category category2 = categoryRepository.save(createCategory("category2", category1));
     }
 
 

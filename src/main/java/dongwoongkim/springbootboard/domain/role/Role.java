@@ -1,7 +1,6 @@
-package dongwoongkim.springbootboard.domain;
+package dongwoongkim.springbootboard.domain.role;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

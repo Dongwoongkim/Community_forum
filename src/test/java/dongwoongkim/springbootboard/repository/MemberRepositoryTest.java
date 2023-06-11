@@ -1,27 +1,22 @@
 package dongwoongkim.springbootboard.repository;
 
-import dongwoongkim.springbootboard.domain.Member;
-import dongwoongkim.springbootboard.domain.MemberRole;
-import dongwoongkim.springbootboard.domain.Role;
-import dongwoongkim.springbootboard.domain.RoleType;
+import dongwoongkim.springbootboard.domain.member.Member;
+import dongwoongkim.springbootboard.domain.member.MemberRole;
+import dongwoongkim.springbootboard.domain.role.Role;
+import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.MemberNotFoundException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class MemberRepositoryTest {

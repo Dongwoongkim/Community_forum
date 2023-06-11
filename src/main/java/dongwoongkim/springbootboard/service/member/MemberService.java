@@ -1,6 +1,6 @@
-package dongwoongkim.springbootboard.service;
+package dongwoongkim.springbootboard.service.member;
 
-import dongwoongkim.springbootboard.dto.MemberResponseDto;
+import dongwoongkim.springbootboard.dto.member.MemberResponseDto;
 import dongwoongkim.springbootboard.exception.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.util.SecurityUtil;

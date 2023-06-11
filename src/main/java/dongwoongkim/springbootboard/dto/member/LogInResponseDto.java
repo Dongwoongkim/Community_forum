@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.dto;
+package dongwoongkim.springbootboard.dto.member;
 
 import io.swagger.annotations.ApiModel;
 import lombok.*;

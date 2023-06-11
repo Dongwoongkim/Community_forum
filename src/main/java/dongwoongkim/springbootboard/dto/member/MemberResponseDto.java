@@ -1,7 +1,7 @@
-package dongwoongkim.springbootboard.dto;
+package dongwoongkim.springbootboard.dto.member;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dongwoongkim.springbootboard.domain.Member;
+import dongwoongkim.springbootboard.domain.member.Member;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 

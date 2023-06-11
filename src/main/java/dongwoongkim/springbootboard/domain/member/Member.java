@@ -1,5 +1,7 @@
-package dongwoongkim.springbootboard.domain;
+package dongwoongkim.springbootboard.domain.member;
 
+import dongwoongkim.springbootboard.domain.BaseEntity;
+import dongwoongkim.springbootboard.domain.role.Role;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

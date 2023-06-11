@@ -1,17 +1,17 @@
-package dongwoongkim.springbootboard.service;
+package dongwoongkim.springbootboard.service.member;
 
-import dongwoongkim.springbootboard.domain.*;
-import dongwoongkim.springbootboard.dto.LoginRequestDto;
-import dongwoongkim.springbootboard.dto.MemberResponseDto;
-import dongwoongkim.springbootboard.dto.SignUpRequestDto;
-import dongwoongkim.springbootboard.dto.LogInResponseDto;
+import dongwoongkim.springbootboard.domain.member.Member;
+import dongwoongkim.springbootboard.domain.role.RoleType;
+import dongwoongkim.springbootboard.dto.member.LoginRequestDto;
+import dongwoongkim.springbootboard.dto.member.SignUpRequestDto;
+import dongwoongkim.springbootboard.dto.member.LogInResponseDto;
 import dongwoongkim.springbootboard.exception.DuplicateEmailException;
 import dongwoongkim.springbootboard.exception.DuplicateUsernameException;
 import dongwoongkim.springbootboard.exception.LoginFailureException;
 import dongwoongkim.springbootboard.exception.RoleNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
-import dongwoongkim.springbootboard.util.SecurityUtil;
+import dongwoongkim.springbootboard.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

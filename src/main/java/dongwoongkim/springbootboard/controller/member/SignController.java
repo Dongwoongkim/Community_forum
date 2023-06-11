@@ -1,11 +1,11 @@
-package dongwoongkim.springbootboard.controller;
+package dongwoongkim.springbootboard.controller.member;
 
 import dongwoongkim.springbootboard.dto.response.Response;
-import dongwoongkim.springbootboard.dto.LoginRequestDto;
-import dongwoongkim.springbootboard.dto.SignUpRequestDto;
-import dongwoongkim.springbootboard.dto.LogInResponseDto;
+import dongwoongkim.springbootboard.dto.member.LoginRequestDto;
+import dongwoongkim.springbootboard.dto.member.SignUpRequestDto;
+import dongwoongkim.springbootboard.dto.member.LogInResponseDto;
 import dongwoongkim.springbootboard.exception.InputFormException;
-import dongwoongkim.springbootboard.service.SignService;
+import dongwoongkim.springbootboard.service.member.SignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -13,21 +13,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(value = "Sign Controller", tags = "Sign")
 @RestController
 @RequiredArgsConstructor
 public class SignController {
     private final SignService signService;
-
     @ApiOperation(value = "회원가입", notes = "회원가입을 한다.") // 2
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)

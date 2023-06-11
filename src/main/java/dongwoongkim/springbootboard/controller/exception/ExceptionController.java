@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.controller;
+package dongwoongkim.springbootboard.controller.exception;
 
 import dongwoongkim.springbootboard.exception.AccessDeniedException;
 import dongwoongkim.springbootboard.exception.AuthenticationEntryPointException;

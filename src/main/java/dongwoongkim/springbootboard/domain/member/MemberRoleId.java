@@ -1,4 +1,6 @@
-package dongwoongkim.springbootboard.domain;
+package dongwoongkim.springbootboard.domain.member;
+
+import dongwoongkim.springbootboard.domain.role.Role;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
