@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.factory;
+package dongwoongkim.springbootboard.factory.category;
 
 import dongwoongkim.springbootboard.domain.category.Category;
 

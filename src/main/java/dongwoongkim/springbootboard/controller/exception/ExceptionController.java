@@ -1,8 +1,7 @@
 package dongwoongkim.springbootboard.controller.exception;
 
-import dongwoongkim.springbootboard.exception.AccessDeniedException;
-import dongwoongkim.springbootboard.exception.AuthenticationEntryPointException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
+import dongwoongkim.springbootboard.exception.auth.AuthenticationEntryPointException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;

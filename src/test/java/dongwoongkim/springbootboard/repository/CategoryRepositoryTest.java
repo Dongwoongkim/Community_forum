@@ -1,9 +1,7 @@
 package dongwoongkim.springbootboard.repository;
 
 import dongwoongkim.springbootboard.domain.category.Category;
-import dongwoongkim.springbootboard.exception.CategoryNotFoundException;
-import dongwoongkim.springbootboard.factory.CategoryFactory;
-import org.assertj.core.api.Assertions;
+import dongwoongkim.springbootboard.exception.category.CategoryNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,10 +12,9 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategory;
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategoryWithName;
+import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategory;
+import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategoryWithName;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class CategoryRepositoryTest {

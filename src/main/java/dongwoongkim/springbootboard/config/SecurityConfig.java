@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("hasAuthority('ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/api/categories/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/categories/**").hasAuthority("ADMIN")
-                .antMatchers("/swagger-uri/**", "/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-uri/**", "/swagger-resources/**","/v3/api-docs/**").permitAll()
 
                 .and()
                 .userDetailsService(memberDetailsService)

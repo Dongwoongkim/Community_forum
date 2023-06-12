@@ -1,7 +1,15 @@
 package dongwoongkim.springbootboard.advice;
 
 import dongwoongkim.springbootboard.dto.response.Response;
-import dongwoongkim.springbootboard.exception.*;
+import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
+import dongwoongkim.springbootboard.exception.auth.AuthenticationEntryPointException;
+import dongwoongkim.springbootboard.exception.auth.ValidateTokenException;
+import dongwoongkim.springbootboard.exception.member.DuplicateEmailException;
+import dongwoongkim.springbootboard.exception.member.DuplicateUsernameException;
+import dongwoongkim.springbootboard.exception.auth.IllegalAuthenticationException;
+import dongwoongkim.springbootboard.exception.member.InputFormException;
+import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
+import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

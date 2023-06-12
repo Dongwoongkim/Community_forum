@@ -1,16 +1,12 @@
 package dongwoongkim.springbootboard.helper;
 
-import dongwoongkim.springbootboard.domain.category.Category;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategory;
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategoryWithName;
+import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategory;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NestedConvertHelperTest {
 

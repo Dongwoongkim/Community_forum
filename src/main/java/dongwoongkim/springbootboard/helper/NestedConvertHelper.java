@@ -1,6 +1,6 @@
 package dongwoongkim.springbootboard.helper;
 
-import dongwoongkim.springbootboard.exception.CannotConvertNestedStructureException;
+import dongwoongkim.springbootboard.exception.category.CannotConvertNestedStructureException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

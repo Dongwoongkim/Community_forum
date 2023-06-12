@@ -4,7 +4,7 @@ import dongwoongkim.springbootboard.dto.response.Response;
 import dongwoongkim.springbootboard.dto.member.LoginRequestDto;
 import dongwoongkim.springbootboard.dto.member.SignUpRequestDto;
 import dongwoongkim.springbootboard.dto.member.LogInResponseDto;
-import dongwoongkim.springbootboard.exception.InputFormException;
+import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.service.member.SignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

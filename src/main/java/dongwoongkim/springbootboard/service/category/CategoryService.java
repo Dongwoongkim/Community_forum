@@ -3,7 +3,7 @@ package dongwoongkim.springbootboard.service.category;
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.dto.category.CategoryRequestDto;
 import dongwoongkim.springbootboard.dto.category.CategoryResponseDto;
-import dongwoongkim.springbootboard.exception.CategoryNotFoundException;
+import dongwoongkim.springbootboard.exception.category.CategoryNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

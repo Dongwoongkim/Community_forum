@@ -4,7 +4,7 @@ import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.member.MemberRole;
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
-import dongwoongkim.springbootboard.exception.MemberNotFoundException;
+import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

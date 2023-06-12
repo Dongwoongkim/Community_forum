@@ -4,7 +4,7 @@ import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
-import dongwoongkim.springbootboard.exception.RoleNotFoundException;
+import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
@@ -16,13 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategory;
-import static dongwoongkim.springbootboard.factory.CategoryFactory.createCategoryWithName;
+import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategory;
 
 @Component
 @RequiredArgsConstructor
