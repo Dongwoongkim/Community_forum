@@ -48,16 +48,17 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/home","/sign-up","/login").permitAll() // 접근가능
+                .antMatchers("/home", "/sign-up", "/login").permitAll() // 접근가능
                 .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("hasAuthority('ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/api/categories/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/categories/**").hasAuthority("ADMIN")
-                .antMatchers("/swagger-uri/**", "/swagger-resources/**","/v3/api-docs/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/posts/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/image/**").permitAll()
 
+                .antMatchers("/swagger-uri/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
                 .and()
                 .userDetailsService(memberDetailsService)
                 .apply(new JwtSecurityConfig(tokenService));// JWT 필터 등록
-
         return http.build();
     }
 }

@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostRequestDto {
+public class PostCreateRequestDto {
 
     @ApiModelProperty(value = "게시글 제목", notes = "게시글 제목을 입력해주세요", required = true, example = "my title")
     @NotBlank(message = "게시글 제목을 입력해주세요.")
@@ -53,7 +52,7 @@ public class PostRequestDto {
     @ApiModelProperty(value = "이미지", notes = "이미지를 첨부해주세요.")
     private List<MultipartFile> images = new ArrayList<>();
 
-    public static Post toEntity(PostRequestDto req, MemberRepository memberRepository, CategoryRepository categoryRepository) {
+    public static Post toEntity(PostCreateRequestDto req, MemberRepository memberRepository, CategoryRepository categoryRepository) {
         return new Post(req.getTitle(),
                 req.getContent(),
                 req.getPrice(),

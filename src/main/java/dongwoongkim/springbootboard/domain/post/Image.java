@@ -1,6 +1,6 @@
 package dongwoongkim.springbootboard.domain.post;
 
-import dongwoongkim.springbootboard.exception.image.UnsupportedImagerFormatException;
+import dongwoongkim.springbootboard.exception.image.UnsupportedImageFormatException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,7 +57,7 @@ public class Image {
                 return ext;
             }
         } catch (StringIndexOutOfBoundsException e) {}
-        throw new UnsupportedImagerFormatException();
+        throw new UnsupportedImageFormatException();
     }
 
     private boolean supportFormat(String ext) {

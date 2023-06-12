@@ -22,3 +22,6 @@ jwt:
   secret:  cmxhZWhkZG5kZG1sdG12bWZsZHJoZHFudm1maHdwcnhtdAo= # echo 'rlaehddnddmltmvmfldrhdqnvmfhwprxmt'|base64
   token-validity-in-seconds:  86400
 
+upload:
+  image:
+    location: src/main/resources/static

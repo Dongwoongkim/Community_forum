@@ -1,6 +1,6 @@
 package dongwoongkim.springbootboard.domain.post;
 
-import dongwoongkim.springbootboard.exception.image.UnsupportedImagerFormatException;
+import dongwoongkim.springbootboard.exception.image.UnsupportedImageFormatException;
 import dongwoongkim.springbootboard.factory.image.ImageFactory;
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +20,12 @@ class ImageTest {
     @Test
     void createImageUnsupportedFormatTest() {
         String unValidExtension = "unsupported";
-        assertThatThrownBy(() -> ImageFactory.createImageWithOriginName("image." + unValidExtension)).isInstanceOf(UnsupportedImagerFormatException.class);
+        assertThatThrownBy(() -> ImageFactory.createImageWithOriginName("image." + unValidExtension)).isInstanceOf(UnsupportedImageFormatException.class);
     }
 
     @Test
     void createImageNonExtensionTest() {
-        assertThatThrownBy(() -> ImageFactory.createImageWithOriginName("image")).isInstanceOf(UnsupportedImagerFormatException.class);
+        assertThatThrownBy(() -> ImageFactory.createImageWithOriginName("image")).isInstanceOf(UnsupportedImageFormatException.class);
     }
 
     @Test
