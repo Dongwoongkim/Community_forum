@@ -9,14 +9,14 @@ import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.PostRepository;
 import dongwoongkim.springbootboard.service.file.FileService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PostService {
@@ -24,15 +24,20 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
     private final FileService fileService;
-
     @Transactional
     public PostCreateResponseDto create(PostCreateRequestDto postCreateRequestDto) {
         Post post = postRepository.save(PostCreateRequestDto.toEntity(postCreateRequestDto, memberRepository, categoryRepository));
+
         List<Image> images = post.getImages();
+        for (Image image : images) {
+            log.info("image = {}", image.getOriginName());
+        }
+
         for (int i = 0; i < images.size(); i++) {
             fileService.upload(postCreateRequestDto.getImages().get(i), images.get(i).getUniqueName());
         }
-
         return new PostCreateResponseDto(post.getId());
     }
+
+
 }

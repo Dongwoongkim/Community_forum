@@ -1,10 +1,12 @@
 package dongwoongkim.springbootboard.service;
 
+import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +29,20 @@ public class MemberDetailsService implements UserDetailsService {
         Optional<Member> member = Optional.ofNullable(memberRepository.findOneWithRolesByUsername(username).
                 orElseThrow(() -> new MemberNotFoundException("DB에서 아이디와 일치하는 회원을 찾을 수 없습니다.")));
         log.info("loadUserByUsername executed.");
-        return createUser(username, member.get());
+        return createUser(member.get());
     }
 
-    private User createUser(String username, Member member) {
+    private UserDetails createUser(Member member) {
         List<SimpleGrantedAuthority> grantedAuthorities = member.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleType().name()))
                 .collect(Collectors.toList());
 
-        return new User(username,member.getPassword(),grantedAuthorities);
+        for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
+            log.info("g = {}", grantedAuthority);
+        }
+        MemberDetails memberDetails = new MemberDetails(member.getId(), member.getUsername(), member.getPassword(), grantedAuthorities);
+        log.info("memberDetails = {}", memberDetails.getId());
+
+        return memberDetails;
     }
 }

@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.controller.post;
 
+import dongwoongkim.springbootboard.aop.AssignMemberId;
 import dongwoongkim.springbootboard.dto.post.PostCreateRequestDto;
 import dongwoongkim.springbootboard.dto.response.Response;
 import dongwoongkim.springbootboard.service.post.PostService;
@@ -26,7 +27,9 @@ public class PostController {
 
     @ApiOperation(value = "게시글 생성", notes = "게시글을 생성한다.")
     @PostMapping
+    @AssignMemberId // AOP로 인증된 회원만 가능
     public Response create(@Valid @ModelAttribute PostCreateRequestDto postCreateRequestDto) {
+        log.info("memberId = {}", postCreateRequestDto.getMemberId());
         return Response.success(postService.create(postCreateRequestDto));
     }
 

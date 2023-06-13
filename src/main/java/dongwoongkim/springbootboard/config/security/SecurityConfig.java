@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.config;
+package dongwoongkim.springbootboard.config.security;
 import dongwoongkim.springbootboard.service.MemberDetailsService;
 import dongwoongkim.springbootboard.service.TokenService;
 import dongwoongkim.springbootboard.handler.JwtAccessDeniedHandler;

@@ -3,6 +3,8 @@ import dongwoongkim.springbootboard.handler.JwtHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -17,7 +19,7 @@ public class TokenService  {
     }
 
     public Authentication getAuthentication(String token) {
-        return jwtHandler.getAuthentication(token);
+        return jwtHandler.getAuthenticationFromToken(token);
     }
 
     public boolean validateToken(String token) {

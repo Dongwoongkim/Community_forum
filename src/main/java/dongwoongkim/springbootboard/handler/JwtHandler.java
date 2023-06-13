@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.handler;
 
+import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
 import dongwoongkim.springbootboard.exception.auth.ValidateTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -56,7 +58,7 @@ public class JwtHandler implements InitializingBean {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthenticationFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
@@ -67,7 +69,8 @@ public class JwtHandler implements InitializingBean {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        UserDetails principal = new User(claims.getSubject(), "", authorities);
+
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 

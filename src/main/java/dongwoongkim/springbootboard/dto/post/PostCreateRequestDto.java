@@ -37,7 +37,7 @@ public class PostCreateRequestDto {
     private String content;
 
     @ApiModelProperty(value = "상품 가격", notes = "상품 가격을 입력해주세요", required = true, example = "10000")
-    @NotBlank(message = "상품 가격을 입력해주세요.")
+    @NotNull(message = "상품 가격을 입력해주세요.")
     private Long price;
 
     @ApiModelProperty(hidden = true)

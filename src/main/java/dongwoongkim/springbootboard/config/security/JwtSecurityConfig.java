@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.config;
+package dongwoongkim.springbootboard.config.security;
 
 import dongwoongkim.springbootboard.filter.JwtFilter;
 import dongwoongkim.springbootboard.service.TokenService;

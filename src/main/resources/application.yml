@@ -24,4 +24,4 @@ jwt:
 
 upload:
   image:
-    location: src/main/resources/static
+    location: /Users/kdo6301/Desktop/springFile/

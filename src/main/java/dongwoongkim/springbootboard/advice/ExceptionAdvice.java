@@ -27,6 +27,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response exception(Exception e) {
         log.info("e = {}", e.getMessage());
+        e.printStackTrace();
         return Response.failure(500, "오류가 발생하였습니다");
     }
 
