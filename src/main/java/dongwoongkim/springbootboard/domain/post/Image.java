@@ -46,6 +46,12 @@ public class Image {
         }
     }
 
+    public void cancel(Post post) {
+        if (this.post != null) {
+            this.post = null;
+        }
+    }
+
     private String generateUniqueName(String extension) {
         return UUID.randomUUID().toString() + "." + extension;
     }

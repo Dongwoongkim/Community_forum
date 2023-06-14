@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.domain;
+package dongwoongkim.springbootboard.domain.base;
 
 import lombok.Getter;
 import net.bytebuddy.asm.Advice;

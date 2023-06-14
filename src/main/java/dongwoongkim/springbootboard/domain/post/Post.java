@@ -2,16 +2,23 @@ package dongwoongkim.springbootboard.domain.post;
 
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
+import dongwoongkim.springbootboard.dto.post.PostUpdateRequestDto;
+import dongwoongkim.springbootboard.dto.post.PostUpdateResponseDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -56,11 +63,51 @@ public class Post {
         addImages(images);
     }
 
-    private void addImages(List<Image> imageList) {
-        imageList.stream().forEach(
+    public PostUpdateResponseDto updatePost(PostUpdateRequestDto postUpdateRequestDto) {
+        this.title = postUpdateRequestDto.getTitle();
+        this.content = postUpdateRequestDto.getContent();
+        this.price = postUpdateRequestDto.getPrice();
+
+        List<Image> add_list = ImageAddList(postUpdateRequestDto);
+        addImages(add_list);
+
+        List<Long> deleteImagesIds = postUpdateRequestDto.getDeleteImagesIds();
+        List<Image> delete_list = convertIdsToImage(deleteImagesIds);
+        deleteImages(delete_list);
+
+        return PostUpdateResponseDto.toDto(postUpdateRequestDto,this);
+    }
+
+    private List<Image> ImageAddList(PostUpdateRequestDto postUpdateRequestDto) {
+        List<MultipartFile> addImages = postUpdateRequestDto.getAddImages();
+        return addImages.stream().map(mf -> new Image(mf.getOriginalFilename())).collect(Collectors.toList());
+    }
+
+    private void addImages(List<Image> addList) {
+        addList.stream().forEach(
                 i -> {
                     images.add(i);
                     i.initPost(this);
                 });
     }
+
+    private void deleteImages(List<Image> deleteList) {
+        deleteList.stream().forEach(
+                i -> {
+                    images.remove(i);
+                }
+        );
+    }
+
+    private List<Image> convertIdsToImage(List<Long> imageIdList) {
+        return imageIdList.stream().map(id -> convertIdToImage(id))
+                .filter(i -> i.isPresent())
+                .map(i -> i.get())
+                .collect(Collectors.toList());
+    }
+
+    private Optional<Image> convertIdToImage(Long id) {
+        return this.images.stream().filter(i -> i.getId().equals(id)).findAny();
+    }
+
 }

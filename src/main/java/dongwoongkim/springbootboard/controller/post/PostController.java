@@ -2,6 +2,7 @@ package dongwoongkim.springbootboard.controller.post;
 
 import dongwoongkim.springbootboard.aop.AssignMemberId;
 import dongwoongkim.springbootboard.dto.post.PostCreateRequestDto;
+import dongwoongkim.springbootboard.dto.post.PostUpdateRequestDto;
 import dongwoongkim.springbootboard.dto.response.Response;
 import dongwoongkim.springbootboard.service.post.PostService;
 import io.swagger.annotations.Api;
@@ -44,5 +45,13 @@ public class PostController {
     public Response delete(@ApiParam(value = "삭제할 게시글 id", required = true) @PathVariable Long id) {
         postService.delete(id);
         return Response.success();
+    }
+
+    @ApiOperation(value = "게시글 수정", notes = "해당 번호의 게시글을 수정한다.")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response update(@ApiParam(value = "게시글 id", required = true) @PathVariable Long id,
+                           @Valid @ModelAttribute PostUpdateRequestDto postUpdateRequestDto) {
+        return Response.success(postService.update(id, postUpdateRequestDto));
     }
 }

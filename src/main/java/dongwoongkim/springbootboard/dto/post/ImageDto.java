@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,10 @@ public class ImageDto {
     private String originName;
 
     public static ImageDto toDto(Image image) {
-        return new ImageDto(image.getId(), image.getOriginName(), image.getUniqueName());
+        return new ImageDto(image.getId(), image.getUniqueName(), image.getOriginName());
     }
 
+    public static List<ImageDto> toDtoList(List<Image> images) {
+        return images.stream().map(i -> ImageDto.toDto(i)).collect(Collectors.toList());
+    }
 }

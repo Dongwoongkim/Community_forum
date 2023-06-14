@@ -2,9 +2,7 @@ package dongwoongkim.springbootboard.service.post;
 
 import dongwoongkim.springbootboard.domain.post.Image;
 import dongwoongkim.springbootboard.domain.post.Post;
-import dongwoongkim.springbootboard.dto.post.PostCreateRequestDto;
-import dongwoongkim.springbootboard.dto.post.PostCreateResponseDto;
-import dongwoongkim.springbootboard.dto.post.PostDto;
+import dongwoongkim.springbootboard.dto.post.*;
 import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
@@ -14,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,26 +29,42 @@ public class PostService {
     public PostCreateResponseDto create(PostCreateRequestDto postCreateRequestDto) {
         Post post = postRepository.save(PostCreateRequestDto.toEntity(postCreateRequestDto, memberRepository, categoryRepository));
 
-        createImagesToServer(postCreateRequestDto, post);
+        uploadImagesToServer(postCreateRequestDto, post);
         return new PostCreateResponseDto(post.getId());
     }
 
-    public PostDto read(Long id) {
-         return PostDto.toDto(postRepository.findById(id).orElseThrow(PostNotFoundException::new));
+    public PostReadResponseDto read(Long id) {
+         return PostReadResponseDto.toDto(postRepository.findById(id).orElseThrow(PostNotFoundException::new));
     }
 
     @Transactional
     public void delete(Long id) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
-        log.info("ID = {}", post.getId());
         postRepository.delete(post);
         deleteImagesFromServer(post);
     }
 
-    private void createImagesToServer(PostCreateRequestDto postCreateRequestDto, Post post) {
+    @Transactional
+    public PostUpdateResponseDto update(Long id, PostUpdateRequestDto postUpdateRequestDto) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        PostUpdateResponseDto postUpdateResponseDto = post.updatePost(postUpdateRequestDto);
+
+        uploadImagesToServer(postUpdateRequestDto,postUpdateResponseDto.getImages());
+
+        return postUpdateResponseDto;
+    }
+
+    private void uploadImagesToServer(PostCreateRequestDto postCreateRequestDto, Post post) {
         List<Image> images = post.getImages();
         for (int i = 0; i < images.size(); i++) {
             fileService.upload(postCreateRequestDto.getImages().get(i), images.get(i).getUniqueName());
+        }
+    }
+    private void uploadImagesToServer(PostUpdateRequestDto postUpdateRequestDto, List<ImageDto> uploadImages) {
+        List<MultipartFile> addImages = postUpdateRequestDto.getAddImages();
+
+        for (int i = 0; i < addImages.size(); i++) {
+            fileService.upload(addImages.get(i), uploadImages.get(i).getUniqueName());
         }
     }
 

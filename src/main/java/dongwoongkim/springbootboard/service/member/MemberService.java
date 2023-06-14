@@ -34,4 +34,5 @@ public class MemberService {
         log.info("member = {}", member.getUsername());
         memberRepository.delete(member);
     }
+
 }

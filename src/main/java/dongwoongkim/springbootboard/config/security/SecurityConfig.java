@@ -54,6 +54,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/post/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("@memberGuard.check(#id)")
                 .antMatchers(HttpMethod.DELETE, "/api/post/{id}/**").access("@postGuard.check(#id)")
+                .antMatchers(HttpMethod.PATCH, "/api/post/{id}/**").access("@postGuard.check(#id)")
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
 
                 .antMatchers("/swagger-uri/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
