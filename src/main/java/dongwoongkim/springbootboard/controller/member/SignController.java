@@ -40,8 +40,8 @@ public class SignController {
     @ApiOperation(value = "로그인", notes = "로그인을 한다.") // 2
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<LogInResponseDto> signin(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-        LogInResponseDto logInResponseDto = signService.signIn(loginRequestDto);
+    public ResponseEntity<LogInResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        LogInResponseDto logInResponseDto = signService.login(loginRequestDto);
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + logInResponseDto.getToken())
                 .body(logInResponseDto);

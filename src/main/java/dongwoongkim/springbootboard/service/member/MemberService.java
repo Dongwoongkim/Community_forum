@@ -1,13 +1,17 @@
 package dongwoongkim.springbootboard.service.member;
 
+import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.dto.member.MemberResponseDto;
+import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -16,17 +20,18 @@ public class MemberService {
 
     public MemberResponseDto getMemberWithAuthoritiesForUser() {
         return MemberResponseDto.toDto(SecurityUtil.getCurrentUsername()
-                .flatMap(memberRepository::findOneWithRolesByUsername).orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
+                .flatMap(memberRepository::findOneWithRolesByUsername).orElseThrow(MemberNotFoundException::new));
     }
 
     public MemberResponseDto getMemberWithAuthoritiesForAdmin(Long id) {
         return MemberResponseDto.toDto(memberRepository.findOneWithRolesById(id)
-                .orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
+                .orElseThrow(MemberNotFoundException::new));
     }
 
     @Transactional
     public void delete(Long id) {
-        memberRepository.delete(
-                memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException("해당 회원은 존재하지 않습니다.")));
+        Member member = memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
+        log.info("member = {}", member.getUsername());
+        memberRepository.delete(member);
     }
 }

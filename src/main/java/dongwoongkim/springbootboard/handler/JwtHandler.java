@@ -1,6 +1,5 @@
 package dongwoongkim.springbootboard.handler;
 
-import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
 import dongwoongkim.springbootboard.exception.auth.ValidateTokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

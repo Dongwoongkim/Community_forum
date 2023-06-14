@@ -8,10 +8,11 @@ import dongwoongkim.springbootboard.dto.member.LogInResponseDto;
 import dongwoongkim.springbootboard.exception.member.DuplicateEmailException;
 import dongwoongkim.springbootboard.exception.member.DuplicateUsernameException;
 import dongwoongkim.springbootboard.exception.auth.LoginFailureException;
+import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
-import dongwoongkim.springbootboard.service.TokenService;
+import dongwoongkim.springbootboard.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,16 +50,19 @@ public class SignService {
         memberRepository.save(member);
     }
 
-    public LogInResponseDto signIn(LoginRequestDto loginRequestDto) {
-        String jwt = jwtLoginRequest(loginRequestDto);
-        return LogInResponseDto.toDto(jwt);
+    public LogInResponseDto login(LoginRequestDto loginRequestDto) {
+        if (memberRepository.existsByUsername(loginRequestDto.getUsername())) {
+            String jwt = jwtLoginRequest(loginRequestDto);
+            return LogInResponseDto.toDto(jwt);
+        }
+        throw new MemberNotFoundException("요청한 회원은 존재하지 않습니다.");
     }
 
     private String jwtLoginRequest(LoginRequestDto loginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken); // loadUserByUsername 메소드 실행
 
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken); // loadUserByUsername 메소드 실행
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         // 토큰 생성 및 리턴

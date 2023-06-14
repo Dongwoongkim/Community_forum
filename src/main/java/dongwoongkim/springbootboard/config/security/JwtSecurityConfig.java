@@ -1,7 +1,7 @@
 package dongwoongkim.springbootboard.config.security;
 
 import dongwoongkim.springbootboard.filter.JwtFilter;
-import dongwoongkim.springbootboard.service.TokenService;
+import dongwoongkim.springbootboard.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

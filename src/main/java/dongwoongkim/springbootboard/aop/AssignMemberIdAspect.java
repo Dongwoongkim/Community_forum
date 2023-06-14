@@ -1,13 +1,11 @@
 package dongwoongkim.springbootboard.aop;
 
 import dongwoongkim.springbootboard.helper.AuthHelper;
-import dongwoongkim.springbootboard.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;

@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.handler;
 
+import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException, MemberNotFoundException {
         response.sendRedirect("/exception/entry-point");
-
     }
 }

@@ -26,11 +26,10 @@ public class MemberController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<MemberResponseDto> findMyInfo() {
-
         return ResponseEntity.ok(memberService.getMemberWithAuthoritiesForUser());
     }
 
-    @ApiOperation(value = "회원 삭제", notes = "액세스 토큰에 ADMIN 권한 정보 필요")
+    @ApiOperation(value = "회원 삭제", notes = "액세스 토큰에 ADMIN 권한 정보가 있거나 자신의 MemberId만 삭제 가능")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response delete(@ApiParam(value = "사용자 id", required = true) @PathVariable Long id) {

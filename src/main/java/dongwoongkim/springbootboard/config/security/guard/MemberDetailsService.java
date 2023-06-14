@@ -1,6 +1,5 @@
-package dongwoongkim.springbootboard.service;
+package dongwoongkim.springbootboard.config.security.guard;
 
-import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
@@ -23,12 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         Optional<Member> member = Optional.ofNullable(memberRepository.findOneWithRolesByUsername(username).
-                orElseThrow(() -> new MemberNotFoundException("DB에서 아이디와 일치하는 회원을 찾을 수 없습니다.")));
-        log.info("loadUserByUsername executed.");
+                orElseThrow(MemberNotFoundException::new));
         return createUser(member.get());
     }
 
@@ -37,12 +34,6 @@ public class MemberDetailsService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleType().name()))
                 .collect(Collectors.toList());
 
-        for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
-            log.info("g = {}", grantedAuthority);
-        }
-        MemberDetails memberDetails = new MemberDetails(member.getId(), member.getUsername(), member.getPassword(), grantedAuthorities);
-        log.info("memberDetails = {}", memberDetails.getId());
-
-        return memberDetails;
+        return new User(member.getUsername(), member.getPassword(), grantedAuthorities);
     }
 }

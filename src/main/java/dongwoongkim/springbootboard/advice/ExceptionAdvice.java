@@ -10,6 +10,7 @@ import dongwoongkim.springbootboard.exception.member.DuplicateEmailException;
 import dongwoongkim.springbootboard.exception.member.DuplicateUsernameException;
 import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
+import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
 import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -124,8 +125,14 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response bindException(MethodArgumentNotValidException e) {
+    public Response methodArgumentNotValidException(MethodArgumentNotValidException e) {
         return Response.failure(400, "양식에 맞게 입력해주세요.");
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response postNotFoundException(PostNotFoundException e) {
+        return Response.failure(400, "해당 게시물을 찾을 수 없습니다.");
     }
 }
 

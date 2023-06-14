@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.service;
+package dongwoongkim.springbootboard.token;
 import dongwoongkim.springbootboard.handler.JwtHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
