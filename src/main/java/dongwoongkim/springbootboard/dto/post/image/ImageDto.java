@@ -1,12 +1,9 @@
-package dongwoongkim.springbootboard.dto.post;
+package dongwoongkim.springbootboard.dto.post.image;
 
 import dongwoongkim.springbootboard.domain.post.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import java.util.List;
 import java.util.stream.Collectors;
 

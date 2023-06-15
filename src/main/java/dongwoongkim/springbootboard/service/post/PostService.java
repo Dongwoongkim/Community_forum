@@ -2,20 +2,27 @@ package dongwoongkim.springbootboard.service.post;
 
 import dongwoongkim.springbootboard.domain.post.Image;
 import dongwoongkim.springbootboard.domain.post.Post;
-import dongwoongkim.springbootboard.dto.post.*;
+import dongwoongkim.springbootboard.dto.post.create.PostCreateRequestDto;
+import dongwoongkim.springbootboard.dto.post.create.PostCreateResponseDto;
+import dongwoongkim.springbootboard.dto.post.image.ImageDto;
+import dongwoongkim.springbootboard.dto.post.read.PostListPagedDto;
+import dongwoongkim.springbootboard.dto.post.read.PostReadResponseDto;
+import dongwoongkim.springbootboard.dto.post.read.condition.PostDto;
+import dongwoongkim.springbootboard.dto.post.read.condition.PostReadCondition;
+import dongwoongkim.springbootboard.dto.post.update.PostUpdateRequestDto;
+import dongwoongkim.springbootboard.dto.post.update.PostUpdateResponseDto;
 import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
-import dongwoongkim.springbootboard.repository.PostRepository;
+import dongwoongkim.springbootboard.repository.post.PostRepository;
 import dongwoongkim.springbootboard.service.file.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,6 +33,7 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
     private final FileService fileService;
+
     @Transactional
     public PostCreateResponseDto create(PostCreateRequestDto postCreateRequestDto) {
         Post post = postRepository.save(PostCreateRequestDto.toEntity(postCreateRequestDto, memberRepository, categoryRepository));
@@ -36,6 +44,10 @@ public class PostService {
 
     public PostReadResponseDto read(Long id) {
          return PostReadResponseDto.toDto(postRepository.findById(id).orElseThrow(PostNotFoundException::new));
+    }
+
+    public PostListPagedDto readAll(PostReadCondition condition) {
+        return PostListPagedDto.toDto(postRepository.findAllByCondition(condition));
     }
 
     @Transactional

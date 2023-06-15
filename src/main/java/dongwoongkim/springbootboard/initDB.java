@@ -2,12 +2,14 @@ package dongwoongkim.springbootboard;
 
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
+import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
+import dongwoongkim.springbootboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -30,6 +32,7 @@ public class initDB {
     private final MemberRepository memberRepository;
     private final RoleRepository roleRepository;
     private final CategoryRepository categoryRepository;
+    private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -40,6 +43,7 @@ public class initDB {
         initAdmin();
         initMember();
         initCategory();
+        initPost();
     }
 
     @Transactional
@@ -77,5 +81,16 @@ public class initDB {
         Category c8 = categoryRepository.save(new Category("category8", null));
     }
 
+    @Transactional
+    public void initPost() {
 
+        Member member = memberRepository.findAll().get(0);
+        Category category = categoryRepository.findAll().get(0);
+        for (int i = 0; i < 2500; i++) {
+            String title = "title" + i;
+            String content = "content " + i;
+            postRepository.save(new Post(title, content, 10000L, member, category, List.of()));
+        }
+
+    }
 }

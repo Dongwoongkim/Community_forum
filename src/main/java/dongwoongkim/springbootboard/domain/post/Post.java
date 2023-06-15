@@ -1,9 +1,10 @@
 package dongwoongkim.springbootboard.domain.post;
 
+import dongwoongkim.springbootboard.domain.base.BaseEntity;
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
-import dongwoongkim.springbootboard.dto.post.PostUpdateRequestDto;
-import dongwoongkim.springbootboard.dto.post.PostUpdateResponseDto;
+import dongwoongkim.springbootboard.dto.post.update.PostUpdateRequestDto;
+import dongwoongkim.springbootboard.dto.post.update.PostUpdateResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

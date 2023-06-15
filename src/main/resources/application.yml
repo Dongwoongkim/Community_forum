@@ -25,3 +25,8 @@ jwt:
 upload:
   image:
     location: /Users/kdo6301/Desktop/springFile/
+
+default:
+  page:
+    size: 5
+    num: 0

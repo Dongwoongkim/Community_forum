@@ -3,13 +3,10 @@ package dongwoongkim.springbootboard.config.security.guard;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
-import dongwoongkim.springbootboard.exception.auth.AuthenticationEntryPointException;
 import dongwoongkim.springbootboard.helper.AuthHelper;
-import dongwoongkim.springbootboard.repository.PostRepository;
+import dongwoongkim.springbootboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 @Component

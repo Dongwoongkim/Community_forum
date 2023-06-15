@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.dto.post;
+package dongwoongkim.springbootboard.dto.post.update;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

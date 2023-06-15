@@ -1,8 +1,9 @@
 package dongwoongkim.springbootboard.controller.post;
 
 import dongwoongkim.springbootboard.aop.AssignMemberId;
-import dongwoongkim.springbootboard.dto.post.PostCreateRequestDto;
-import dongwoongkim.springbootboard.dto.post.PostUpdateRequestDto;
+import dongwoongkim.springbootboard.dto.post.create.PostCreateRequestDto;
+import dongwoongkim.springbootboard.dto.post.read.condition.PostReadCondition;
+import dongwoongkim.springbootboard.dto.post.update.PostUpdateRequestDto;
 import dongwoongkim.springbootboard.dto.response.Response;
 import dongwoongkim.springbootboard.service.post.PostService;
 import io.swagger.annotations.Api;
@@ -10,7 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,15 @@ public class PostController {
     public Response create(@Valid @ModelAttribute PostCreateRequestDto postCreateRequestDto) {
         log.info("memberId = {}", postCreateRequestDto.getMemberId());
         return Response.success(postService.create(postCreateRequestDto));
+    }
+
+    @ApiOperation(value = "게시글 목록 조회", notes = "게시글 목록을 조회한다.")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Response readAll(@Valid PostReadCondition cond) {
+        log.info("cond size = {}", cond.getSize());
+        log.info("cond page = {}", cond.getPage());
+        return Response.success(postService.readAll(cond));
     }
 
     @ApiOperation(value = "게시글 조회", notes = "게시글 번호로 게시글을 조회한다.")

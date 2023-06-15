@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.dto.post;
+package dongwoongkim.springbootboard.dto.post.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

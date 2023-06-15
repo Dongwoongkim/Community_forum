@@ -1,8 +1,9 @@
-package dongwoongkim.springbootboard.dto.post;
+package dongwoongkim.springbootboard.dto.post.update;
 
 
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.dto.member.MemberDto;
+import dongwoongkim.springbootboard.dto.post.image.ImageDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

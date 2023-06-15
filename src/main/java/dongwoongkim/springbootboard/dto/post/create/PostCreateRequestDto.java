@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.dto.post;
+package dongwoongkim.springbootboard.dto.post.create;
 
 import dongwoongkim.springbootboard.domain.post.Image;
 import dongwoongkim.springbootboard.domain.post.Post;

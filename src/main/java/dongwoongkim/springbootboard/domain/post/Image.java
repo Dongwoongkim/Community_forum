@@ -1,6 +1,6 @@
 package dongwoongkim.springbootboard.domain.post;
 
-import dongwoongkim.springbootboard.dto.post.ImageDto;
+import dongwoongkim.springbootboard.dto.post.image.ImageDto;
 import dongwoongkim.springbootboard.exception.image.UnsupportedImageFormatException;
 import lombok.AccessLevel;
 import lombok.Getter;
