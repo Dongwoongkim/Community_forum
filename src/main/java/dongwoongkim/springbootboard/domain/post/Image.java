@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.domain.post;
 
+import dongwoongkim.springbootboard.dto.post.ImageDto;
 import dongwoongkim.springbootboard.exception.image.UnsupportedImageFormatException;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -68,5 +69,9 @@ public class Image {
 
     private boolean supportFormat(String ext) {
         return Arrays.stream(extension).anyMatch(e -> e.equalsIgnoreCase(ext));
+    }
+
+    public static Image toEntity(ImageDto imageDto) {
+        return new Image(imageDto.getOriginName());
     }
 }

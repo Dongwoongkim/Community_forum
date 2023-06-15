@@ -3,15 +3,10 @@ package dongwoongkim.springbootboard.dto.post;
 
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.dto.member.MemberDto;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Data
@@ -29,16 +24,18 @@ public class PostUpdateResponseDto {
 
     private MemberDto memberResponseDto;
 
-    private List<ImageDto> images;
+    private List<ImageDto> addedImages;
+    private List<ImageDto> deletedImages;
 
 
-    public static PostUpdateResponseDto toDto(PostUpdateRequestDto postUpdateRequestDto, Post post) {
+    public static PostUpdateResponseDto toDto(PostUpdateRequestDto postUpdateRequestDto, Post post, Post.UpdatedImageResult updatedImageResult) {
         return new PostUpdateResponseDto(post.getId(),
                 postUpdateRequestDto.getTitle(),
                 postUpdateRequestDto.getContent(),
                 postUpdateRequestDto.getPrice(),
                 MemberDto.toDto(post.getMember()),
-                ImageDto.toDtoList(post.getImages()));
+                ImageDto.toDtoList(updatedImageResult.getAddImagesList()),
+                ImageDto.toDtoList(updatedImageResult.getDeleteImageList()));
     }
 
 

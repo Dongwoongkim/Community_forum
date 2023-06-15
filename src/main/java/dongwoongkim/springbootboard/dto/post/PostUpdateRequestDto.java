@@ -37,6 +37,6 @@ public class PostUpdateRequestDto {
     private List<MultipartFile> addImages = new ArrayList<>();
 
     @ApiModelProperty(value = "삭제할 이미지", notes = "삭제할 이미지 ID")
-    private List<Long> deleteImagesIds = new ArrayList<>();
+    private List<Long> deleteImageIds = new ArrayList<>();
 
 }

@@ -5,6 +5,7 @@ import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.dto.post.PostUpdateRequestDto;
 import dongwoongkim.springbootboard.dto.post.PostUpdateResponseDto;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,18 +69,21 @@ public class Post {
         this.content = postUpdateRequestDto.getContent();
         this.price = postUpdateRequestDto.getPrice();
 
-        List<Image> add_list = ImageAddList(postUpdateRequestDto);
-        addImages(add_list);
+        List<Image> addImages = ImageAddList(postUpdateRequestDto.getAddImages());
+        List<Image> deleteImages = convertIdsToImage(postUpdateRequestDto.getDeleteImageIds());
 
-        List<Long> deleteImagesIds = postUpdateRequestDto.getDeleteImagesIds();
-        List<Image> delete_list = convertIdsToImage(deleteImagesIds);
-        deleteImages(delete_list);
+        UpdatedImageResult updatedImageResult = new UpdatedImageResult(addImages, deleteImages);
+        update(addImages, deleteImages); // add & delete
 
-        return PostUpdateResponseDto.toDto(postUpdateRequestDto,this);
+        return PostUpdateResponseDto.toDto(postUpdateRequestDto,this, updatedImageResult);
     }
 
-    private List<Image> ImageAddList(PostUpdateRequestDto postUpdateRequestDto) {
-        List<MultipartFile> addImages = postUpdateRequestDto.getAddImages();
+    private void update(List<Image> addImageList, List<Image> deleteImageList) {
+        addImages(addImageList);
+        deleteImages(deleteImageList);
+    }
+
+    private List<Image> ImageAddList(List<MultipartFile> addImages) {
         return addImages.stream().map(mf -> new Image(mf.getOriginalFilename())).collect(Collectors.toList());
     }
 
@@ -110,4 +114,10 @@ public class Post {
         return this.images.stream().filter(i -> i.getId().equals(id)).findAny();
     }
 
+    @AllArgsConstructor
+    @Getter
+    public class UpdatedImageResult {
+        private List<Image> addImagesList;
+        private List<Image> deleteImageList;
+    }
 }

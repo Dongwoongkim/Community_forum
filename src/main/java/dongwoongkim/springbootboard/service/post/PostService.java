@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -49,22 +50,17 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
         PostUpdateResponseDto postUpdateResponseDto = post.updatePost(postUpdateRequestDto);
 
-        uploadImagesToServer(postUpdateRequestDto,postUpdateResponseDto.getImages());
+        uploadImagesToServer(postUpdateRequestDto, postUpdateResponseDto);
+        deleteImagesFromServer(postUpdateResponseDto);
 
         return postUpdateResponseDto;
     }
 
     private void uploadImagesToServer(PostCreateRequestDto postCreateRequestDto, Post post) {
         List<Image> images = post.getImages();
+
         for (int i = 0; i < images.size(); i++) {
             fileService.upload(postCreateRequestDto.getImages().get(i), images.get(i).getUniqueName());
-        }
-    }
-    private void uploadImagesToServer(PostUpdateRequestDto postUpdateRequestDto, List<ImageDto> uploadImages) {
-        List<MultipartFile> addImages = postUpdateRequestDto.getAddImages();
-
-        for (int i = 0; i < addImages.size(); i++) {
-            fileService.upload(addImages.get(i), uploadImages.get(i).getUniqueName());
         }
     }
 
@@ -72,4 +68,17 @@ public class PostService {
         List<Image> images = post.getImages();
         images.stream().forEach(i -> fileService.delete(i.getUniqueName()));
     }
+
+    private void uploadImagesToServer(PostUpdateRequestDto postUpdateRequestDto, PostUpdateResponseDto postUpdateResponseDto) {
+        List<ImageDto> addedImages = postUpdateResponseDto.getAddedImages();
+        for (int i = 0; i < addedImages.size(); i++) {
+            fileService.upload(postUpdateRequestDto.getAddImages().get(i), addedImages.get(i).getUniqueName());
+        }
+    }
+
+    private void deleteImagesFromServer(PostUpdateResponseDto postUpdateResponseDto) {
+        List<ImageDto> deleteImageDtoList = postUpdateResponseDto.getDeletedImages();
+        deleteImageDtoList.stream().forEach(i -> fileService.delete(i.getUniqueName()));
+    }
+
 }
