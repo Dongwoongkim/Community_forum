@@ -30,7 +30,6 @@ public class PostController {
     @PostMapping
     @AssignMemberId // AOP로 인증된 회원만 가능
     public Response create(@Valid @ModelAttribute PostCreateRequestDto postCreateRequestDto) {
-        log.info("memberId = {}", postCreateRequestDto.getMemberId());
         return Response.success(postService.create(postCreateRequestDto));
     }
 

@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.factory.post;
 
+import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.post.Image;
 import dongwoongkim.springbootboard.domain.post.Post;
@@ -15,6 +16,9 @@ public class PostFactory {
 
     public static Post createPost() {
         return new Post("title", "content", 1000L, createMember(), createCategory(), List.of());
+    }
+    public static Post createPost(Member member, Category category) {
+        return new Post("title", "content", 1000L, member, category, List.of());
     }
 
     public static Post createPostWithImages(List<Image> images) {

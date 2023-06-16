@@ -9,14 +9,16 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-      show_sql: true
-      format_sql: true
+        show_sql: true
+        format_sql: false
+        default_batch_fetch_size: 100
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
 
 logging.level:
-  org.hibernate.SQL: debug
+  org.hibernate.SQL:
 
 jwt:
   secret:  cmxhZWhkZG5kZG1sdG12bWZsZHJoZHFudm1maHdwcnhtdAo= # echo 'rlaehddnddmltmvmfldrhdqnvmfhwprxmt'|base64

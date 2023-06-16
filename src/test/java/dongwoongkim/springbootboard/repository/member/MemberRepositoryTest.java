@@ -1,10 +1,12 @@
-package dongwoongkim.springbootboard.repository;
+package dongwoongkim.springbootboard.repository.member;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.member.MemberRole;
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
+import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.RoleRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,10 @@ import static java.util.Collections.emptyList;
 class MemberRepositoryTest {
 
     @PersistenceContext EntityManager em;
-    @Autowired MemberRepository memberRepository;
-    @Autowired RoleRepository roleRepository;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     private void clear() {
         em.flush();

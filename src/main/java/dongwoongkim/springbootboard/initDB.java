@@ -1,6 +1,7 @@
 package dongwoongkim.springbootboard;
 
 import dongwoongkim.springbootboard.domain.category.Category;
+import dongwoongkim.springbootboard.domain.comment.Comment;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.domain.role.Role;
@@ -9,6 +10,7 @@ import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import dongwoongkim.springbootboard.repository.CategoryRepository;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.repository.RoleRepository;
+import dongwoongkim.springbootboard.repository.comment.CommentRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class initDB {
     private final MemberRepository memberRepository;
     private final RoleRepository roleRepository;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -44,6 +47,7 @@ public class initDB {
         initMember();
         initCategory();
         initPost();
+        initComment();
     }
 
     @Transactional
@@ -91,6 +95,19 @@ public class initDB {
             String content = "content " + i;
             postRepository.save(new Post(title, content, 10000L, member, category, List.of()));
         }
+    }
 
+
+    private void initComment() {
+        Member member = memberRepository.findAll().get(0);
+        Post post = postRepository.findAll().get(0);
+        Comment c1 = commentRepository.save(new Comment("content", member, post, null));
+        Comment c2 = commentRepository.save(new Comment("content", member, post, c1));
+        Comment c3 = commentRepository.save(new Comment("content", member, post, c1));
+        Comment c4 = commentRepository.save(new Comment("content", member, post, c2));
+        Comment c5 = commentRepository.save(new Comment("content", member, post, c2));
+        Comment c6 = commentRepository.save(new Comment("content", member, post, c4));
+        Comment c7 = commentRepository.save(new Comment("content", member, post, c3));
+        Comment c8 = commentRepository.save(new Comment("content", member, post, null));
     }
 }
