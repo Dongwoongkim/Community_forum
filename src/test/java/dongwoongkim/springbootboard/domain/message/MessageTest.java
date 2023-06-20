@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MessageTest {
 
-    tdd
-
     @Test
     void deleteBySenderTest() {
         Message message = createMessage();
-        message.isDeletedBySender()
+        message.isDeletedBySender();
 
     }
 

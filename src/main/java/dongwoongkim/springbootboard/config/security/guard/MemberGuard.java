@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberGuard extends Guard{
     private final MemberRepository memberRepository;
-
     @Override
     protected boolean isResourceOwner(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(AccessDeniedException::new);
