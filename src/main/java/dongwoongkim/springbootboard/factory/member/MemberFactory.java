@@ -12,5 +12,8 @@ public class MemberFactory {
     public static Member createMember() {
         return new Member("user", "1q2w3e4r!!", "nick", "ee@naver.com", emptyList());
     }
+    public static Member createMember2() {
+        return new Member("user2", "1q2w3e4r!!2", "nick2", "ee2@naver.com", emptyList());
+    }
 
 }
