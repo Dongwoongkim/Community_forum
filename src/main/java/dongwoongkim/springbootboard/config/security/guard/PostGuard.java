@@ -11,25 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
-public class PostGuard {
-    private final AuthHelper authHelper;
+public class PostGuard extends Guard{
     private final PostRepository postRepository;
 
-    public boolean check(Long postId) {
-        return authHelper.isAuthenticated() && hasAuthority(postId);
-    }
-
-    private boolean hasAuthority(Long postId) {
-        return authHelper.extractMemberRolesFromContext().contains(RoleType.ADMIN) || isResourceOwner(postId);
-    }
-
-    private boolean isResourceOwner(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(AccessDeniedException::new);
-        Long memberId = authHelper.extractMemberId();
-
+    @Override
+    protected boolean isResourceOwner(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(AccessDeniedException::new);
+        Long memberId = AuthHelper.extractMemberId();
         return post.getMember().getId().equals(memberId);
     }
-
-
 }

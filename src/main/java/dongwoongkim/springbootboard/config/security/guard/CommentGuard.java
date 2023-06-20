@@ -15,22 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CommentGuard {
-    private final AuthHelper authHelper;
+public class CommentGuard extends Guard{
     private final CommentRepository commentRepository;
-
-    public boolean check(Long id) {
-        return authHelper.isAuthenticated() && hasAuthority(id);
-    }
-    private boolean hasAuthority(Long id) {
-        return authHelper.extractMemberRolesFromContext().contains(RoleType.ADMIN) || isResourceOwner(id);
-    }
-
-    private boolean isResourceOwner(Long id) {
+    @Override
+    protected boolean isResourceOwner(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(AccessDeniedException::new);
-        Long memberId = authHelper.extractMemberId();
+        Long memberId = AuthHelper.extractMemberId();
         return comment.getMember().getId().equals(memberId);
     }
-
-
 }

@@ -1,6 +1,9 @@
 package dongwoongkim.springbootboard.handler;
 
+import dongwoongkim.springbootboard.SpringBootBoardApplication;
 import dongwoongkim.springbootboard.exception.auth.ValidateTokenException;
+import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
+import dongwoongkim.springbootboard.token.TokenService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,9 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class JwtHandler implements InitializingBean {
 
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String AUTHENTICATE_ID = "ID";
     private final long tokenValidityInMilliseconds;
     private final String originSecretkey;
     private Key secret;
@@ -41,7 +43,7 @@ public class JwtHandler implements InitializingBean {
         this.tokenValidityInMilliseconds = tokenValidityInMilliseconds * 1000;
     }
 
-    public String createAccessToken(Authentication authentication) {
+    public String createAccessToken(Authentication authentication, TokenService.PrivateClaims privateClaims) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -50,8 +52,8 @@ public class JwtHandler implements InitializingBean {
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
         return Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim(AUTHORITIES_KEY, authorities) //
+                .addClaims(Map.of(AUTHORITIES_KEY, authorities))
+                .addClaims(Map.of(AUTHENTICATE_ID, privateClaims.getMemberId()))
                 .signWith(secret, SignatureAlgorithm.HS256)
                 .setExpiration(validity)
                 .compact();
@@ -64,12 +66,11 @@ public class JwtHandler implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+        List<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
-
+        MemberDetails principal = new MemberDetails((String) claims.get(AUTHENTICATE_ID), authorities);
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 

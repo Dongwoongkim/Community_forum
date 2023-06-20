@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -51,14 +52,26 @@ public class SignService {
     }
 
     public LogInResponseDto login(LoginRequestDto loginRequestDto) {
-        if (memberRepository.existsByUsername(loginRequestDto.getUsername())) {
-            String jwt = jwtLoginRequest(loginRequestDto);
+        Member member = memberRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow(MemberNotFoundException::new);
+        if (member != null) {
+            TokenService.PrivateClaims privateClaims = createPrivateClaims(member);
+            String jwt = jwtLoginRequest(loginRequestDto, privateClaims);
             return LogInResponseDto.toDto(jwt);
         }
         throw new MemberNotFoundException("요청한 회원은 존재하지 않습니다.");
     }
 
-    private String jwtLoginRequest(LoginRequestDto loginRequestDto) {
+    private TokenService.PrivateClaims createPrivateClaims(Member member) {
+        return new TokenService.PrivateClaims(
+                String.valueOf(member.getId()),
+                member.getRoles().stream()
+                        .map(memberRole -> memberRole.getRole())
+                        .map(role -> role.getRoleType())
+                        .map(roleType -> roleType.toString())
+                        .collect(Collectors.toList()));
+    }
+
+    private String jwtLoginRequest(LoginRequestDto loginRequestDto, TokenService.PrivateClaims privateClaims) {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
 
@@ -66,7 +79,7 @@ public class SignService {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         // 토큰 생성 및 리턴
-        String jwt = tokenService.createAccessToken(authentication);
+        String jwt = tokenService.createAccessToken(authentication, privateClaims);
         if (!StringUtils.hasText(jwt)) {
             throw new LoginFailureException("로그인에 실패하였습니다.");
         }

@@ -1,11 +1,13 @@
 package dongwoongkim.springbootboard.helper;
 
+import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.MemberRepository;
 import dongwoongkim.springbootboard.token.TokenService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,32 +23,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Slf4j
-@Component
-@RequiredArgsConstructor
 public class AuthHelper {
-    private final MemberRepository memberRepository;
 
-    public Long extractMemberId() {
+    public static Long extractMemberId() {
         Authentication authentication = getAuthenticationFromContext();
-        UserDetails principal = (User) authentication.getPrincipal();
-        Member member = memberRepository.findByUsername(principal.getUsername()).orElseThrow(MemberNotFoundException::new);
-        return member.getId();
+        MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+        return Long.valueOf(principal.getId());
     }
-    public boolean isAuthenticated() {
+    public static boolean isAuthenticated() {
         Authentication authentication = getAuthenticationFromContext();
         return authentication.isAuthenticated() && authentication instanceof UsernamePasswordAuthenticationToken;
     }
 
-    public List<RoleType> extractMemberRolesFromContext() {
+    public static List<RoleType> extractMemberRolesFromContext() {
         Authentication authentication = getAuthenticationFromContext();
-        User principal = (User) authentication.getPrincipal();
-        Collection<GrantedAuthority> authorities = principal.getAuthorities();
+        MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 
         return authorities.stream().map(authority -> authority.getAuthority()).map(authStr -> RoleType.valueOf(authStr)).collect(Collectors.toList());
     }
 
-    private Authentication getAuthenticationFromContext() {
+    private static Authentication getAuthenticationFromContext() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 }

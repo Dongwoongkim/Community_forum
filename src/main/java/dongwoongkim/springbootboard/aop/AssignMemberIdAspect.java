@@ -17,9 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class AssignMemberIdAspect {
-
-    private final AuthHelper authHelper;
-
     @Before("@annotation(dongwoongkim.springbootboard.aop.AssignMemberId)") // 부가 기능이 수행되는 지점
     // @AssignMemberId 어노테이션이 적용된 메소드들은, 본래의 메소드 수행 직전 assignMemberId()가 수행됨.
     public void assignMemberId(JoinPoint joinPoint) {
@@ -27,9 +24,7 @@ public class AssignMemberIdAspect {
         log.info("joinPoint = {}", joinPoint.getArgs());
         Arrays.stream(joinPoint.getArgs())
                 .forEach(arg -> getMethod(arg.getClass(), "setMemberId")
-                        .ifPresent(setMemberId -> invokeMethod(arg, setMemberId, authHelper.extractMemberId())));
-
-        log.info("finded!");
+                        .ifPresent(setMemberId -> invokeMethod(arg, setMemberId, AuthHelper.extractMemberId())));
     }
 
     // JointPoint에서 method 조회
