@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.repository;
+package dongwoongkim.springbootboard.repository.category;
 
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.dto.post.read.condition.PostDto;

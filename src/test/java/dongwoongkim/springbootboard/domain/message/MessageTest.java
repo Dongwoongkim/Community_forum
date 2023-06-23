@@ -12,12 +12,24 @@ class MessageTest {
     @Test
     void deleteBySenderTest() {
         Message message = createMessage();
-        message.isDeletedBySender();
-
+        message.deleteBySender();
+        assertThat(message.isDeletedBySender()).isTrue();
     }
 
     @Test
     void deleteByReceiverTest() {
+        Message message = createMessage();
+        message.deleteByReceiver();
+        assertThat(message.isDeletedByReceiver()).isTrue();
+    }
+
+    @Test
+    public void isNotDeletableTest() throws Exception {
+        //given
+        Message message = createMessage();
+
+        // then
+        assertThat(message.isDeletable()).isFalse();
     }
 
     @Test

@@ -5,8 +5,6 @@ import dongwoongkim.springbootboard.domain.member.MemberRole;
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
-import dongwoongkim.springbootboard.repository.MemberRepository;
-import dongwoongkim.springbootboard.repository.RoleRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

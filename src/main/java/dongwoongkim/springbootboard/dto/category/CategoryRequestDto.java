@@ -1,17 +1,14 @@
 package dongwoongkim.springbootboard.dto.category;
 
 import dongwoongkim.springbootboard.domain.category.Category;
-import dongwoongkim.springbootboard.repository.CategoryRepository;
-import io.swagger.annotations.Api;
+import dongwoongkim.springbootboard.repository.category.CategoryRepository;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Optional;
 
 
 @ApiModel(value = "카테고리 생성 요청")

@@ -1,13 +1,11 @@
 package dongwoongkim.springbootboard.service.comment;
 
-import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.repository.comment.CommentRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CommentServiceTest {
 

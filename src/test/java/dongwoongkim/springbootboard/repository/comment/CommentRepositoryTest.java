@@ -6,8 +6,8 @@ import dongwoongkim.springbootboard.domain.comment.Comment;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.exception.comment.CommentNotFoundException;
-import dongwoongkim.springbootboard.repository.CategoryRepository;
-import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.category.CategoryRepository;
+import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategory;
 import static dongwoongkim.springbootboard.factory.comment.CommentFactory.createComment;
@@ -29,7 +27,6 @@ import static dongwoongkim.springbootboard.factory.member.MemberFactory.createMe
 import static dongwoongkim.springbootboard.factory.post.PostFactory.createPost;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import(QuerydslConfig.class)

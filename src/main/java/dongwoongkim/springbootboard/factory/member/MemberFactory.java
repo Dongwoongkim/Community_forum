@@ -16,4 +16,13 @@ public class MemberFactory {
         return new Member("user2", "1q2w3e4r!!2", "nick2", "ee2@naver.com", emptyList());
     }
 
+    public static Member createSendMember() {
+        return new Member("sender", "", "sendUser", "e1@naver.com", emptyList());
+    }
+
+    public static Member createReceiveMember() {
+        return new Member("receiver", "", "receiveUser", "e2@naver.com", emptyList());
+    }
+
+
 }

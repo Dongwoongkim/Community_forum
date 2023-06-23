@@ -2,9 +2,8 @@ package dongwoongkim.springbootboard.service.member;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.dto.member.MemberResponseDto;
-import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
-import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

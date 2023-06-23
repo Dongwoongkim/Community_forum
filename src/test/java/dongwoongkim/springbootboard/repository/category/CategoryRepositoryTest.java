@@ -2,7 +2,6 @@ package dongwoongkim.springbootboard.repository.category;
 
 import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.exception.category.CategoryNotFoundException;
-import dongwoongkim.springbootboard.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

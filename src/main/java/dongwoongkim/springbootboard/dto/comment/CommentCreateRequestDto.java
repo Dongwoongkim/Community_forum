@@ -1,18 +1,10 @@
 package dongwoongkim.springbootboard.dto.comment;
 
-import dongwoongkim.springbootboard.domain.comment.Comment;
-import dongwoongkim.springbootboard.exception.comment.CommentNotFoundException;
-import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
-import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
-import dongwoongkim.springbootboard.repository.MemberRepository;
-import dongwoongkim.springbootboard.repository.comment.CommentRepository;
-import dongwoongkim.springbootboard.repository.post.PostRepository;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

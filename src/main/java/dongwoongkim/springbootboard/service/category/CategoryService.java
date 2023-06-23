@@ -4,7 +4,7 @@ import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.dto.category.CategoryRequestDto;
 import dongwoongkim.springbootboard.dto.category.CategoryResponseDto;
 import dongwoongkim.springbootboard.exception.category.CategoryNotFoundException;
-import dongwoongkim.springbootboard.repository.CategoryRepository;
+import dongwoongkim.springbootboard.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

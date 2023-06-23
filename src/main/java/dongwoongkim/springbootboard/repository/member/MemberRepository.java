@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.repository;
+package dongwoongkim.springbootboard.repository.member;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import org.springframework.data.jpa.repository.EntityGraph;

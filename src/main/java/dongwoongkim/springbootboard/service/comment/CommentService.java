@@ -5,7 +5,7 @@ import dongwoongkim.springbootboard.dto.comment.CommentCreateRequestDto;
 import dongwoongkim.springbootboard.dto.comment.CommentResponseDto;
 import dongwoongkim.springbootboard.dto.comment.cond.CommentReadCondition;
 import dongwoongkim.springbootboard.exception.comment.CommentNotFoundException;
-import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.repository.comment.CommentRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;

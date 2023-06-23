@@ -6,7 +6,7 @@ import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.dto.comment.CommentCreateRequestDto;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
-import dongwoongkim.springbootboard.repository.MemberRepository;
+import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.repository.comment.CommentRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
 import lombok.AccessLevel;

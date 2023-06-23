@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.repository;
+package dongwoongkim.springbootboard.repository.member;
 
 import dongwoongkim.springbootboard.domain.role.Role;
 import dongwoongkim.springbootboard.domain.role.RoleType;
