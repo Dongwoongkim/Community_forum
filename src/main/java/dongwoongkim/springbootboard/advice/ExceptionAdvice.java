@@ -10,6 +10,7 @@ import dongwoongkim.springbootboard.exception.member.DuplicateEmailException;
 import dongwoongkim.springbootboard.exception.member.DuplicateUsernameException;
 import dongwoongkim.springbootboard.exception.member.InputFormException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
+import dongwoongkim.springbootboard.exception.message.MessageNotFoundException;
 import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
 import dongwoongkim.springbootboard.exception.role.RoleNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -96,25 +97,25 @@ public class ExceptionAdvice {
     @ExceptionHandler(CannotConvertNestedStructureException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response cannotConvertNestedStructureException(CannotConvertNestedStructureException e) {
-        return Response.failure(500,"카테고리를 변경할 수 없습니다.");
+        return Response.failure(500, "카테고리를 변경할 수 없습니다.");
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response categoryNotFoundException(CategoryNotFoundException e) {
-        return Response.failure(404,"카테고리를 찾을 수 없습니다.");
+        return Response.failure(404, "카테고리를 찾을 수 없습니다.");
     }
 
     @ExceptionHandler(FileUploadFailureException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response fileUploadFailureException(FileUploadFailureException e) {
-        return Response.failure(404,"파일 업로드에 실패햐였습니다.");
+        return Response.failure(404, "파일 업로드에 실패햐였습니다.");
     }
 
     @ExceptionHandler(UnsupportedImageFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response unsupportedImageFormatException(UnsupportedImageFormatException e) {
-        return Response.failure(404,"지원하지 않는 파일형식 입니다.");
+        return Response.failure(404, "지원하지 않는 파일형식 입니다.");
     }
 
     @ExceptionHandler(BindException.class)
@@ -133,6 +134,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response postNotFoundException(PostNotFoundException e) {
         return Response.failure(400, "해당 게시물을 찾을 수 없습니다.");
+    }
+
+    @ExceptionHandler(MessageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response messageNotFoundException(MessageNotFoundException e) {
+        return Response.failure(400, "해당 쪽지를 찾을 수 없습니다.");
     }
 }
 

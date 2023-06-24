@@ -1,5 +1,6 @@
-package dongwoongkim.springbootboard.config.security.guard;
+package dongwoongkim.springbootboard.config.security.guard.comment;
 
+import dongwoongkim.springbootboard.config.security.guard.Guard;
 import dongwoongkim.springbootboard.domain.comment.Comment;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.domain.role.RoleType;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CommentGuard extends Guard{
+public class CommentGuard extends Guard {
     private final CommentRepository commentRepository;
     @Override
     protected boolean isResourceOwner(Long id) {

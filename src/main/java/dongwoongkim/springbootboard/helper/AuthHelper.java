@@ -1,6 +1,6 @@
 package dongwoongkim.springbootboard.helper;
 
-import dongwoongkim.springbootboard.config.security.guard.MemberDetails;
+import dongwoongkim.springbootboard.config.security.details.MemberDetails;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

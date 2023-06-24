@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.config.security.guard;
+package dongwoongkim.springbootboard.config.security.details;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

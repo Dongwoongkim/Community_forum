@@ -1,5 +1,6 @@
-package dongwoongkim.springbootboard.config.security.guard;
+package dongwoongkim.springbootboard.config.security.guard.post;
 
+import dongwoongkim.springbootboard.config.security.guard.Guard;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.domain.role.RoleType;
 import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PostGuard extends Guard{
+public class PostGuard extends Guard {
     private final PostRepository postRepository;
 
     @Override

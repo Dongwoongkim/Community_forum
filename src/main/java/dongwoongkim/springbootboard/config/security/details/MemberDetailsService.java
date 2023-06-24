@@ -1,4 +1,4 @@
-package dongwoongkim.springbootboard.config.security.guard;
+package dongwoongkim.springbootboard.config.security.details;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;

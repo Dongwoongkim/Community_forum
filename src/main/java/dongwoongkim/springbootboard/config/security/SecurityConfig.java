@@ -1,5 +1,5 @@
 package dongwoongkim.springbootboard.config.security;
-import dongwoongkim.springbootboard.config.security.guard.MemberDetailsService;
+import dongwoongkim.springbootboard.config.security.details.MemberDetailsService;
 import dongwoongkim.springbootboard.token.TokenService;
 import dongwoongkim.springbootboard.handler.JwtAccessDeniedHandler;
 import dongwoongkim.springbootboard.handler.JwtAuthenticationEntryPoint;
@@ -49,18 +49,28 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/home", "/sign-up", "/login").permitAll() // 접근가능
-                .antMatchers(HttpMethod.DELETE, "/api/categories/**").hasAuthority("ADMIN")
+
+                .antMatchers(HttpMethod.DELETE, "/api/categories/**").hasAuthority("ADMIN") // 카테고리 삭제, 생성은 ADMIN만 가능
                 .antMatchers(HttpMethod.POST, "/api/categories/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/post/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("@memberGuard.check(#id)") // 회원삭제는 본인이나 admin만 가능
+
+                .antMatchers(HttpMethod.POST, "/api/post/**").authenticated() // 게시물 생성은 인증된 사용자만 가능
                 .antMatchers(HttpMethod.DELETE, "/api/post/{id}/**").access("@postGuard.check(#id)") // 글은 본인이나 admin만 삭제가능
                 .antMatchers(HttpMethod.PATCH, "/api/post/{id}/**").access("@postGuard.check(#id)") // 글은 본인이나 admin만 수정가능
+
+                .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("@memberGuard.check(#id)") // 회원 삭제는 본인이나 admin만 가능
+
                 .antMatchers(HttpMethod.DELETE, "/api/comments/{id}/**").access("@commentGuard.check(#id)") // 댓글은 본인이나 admin만 삭제가능
+
+                .antMatchers(HttpMethod.GET, "/api/messages/{id}").access("@messageGuard.check(#id)") // 쪽지는 받은사람 or 보낸사람 or ADMIN만 조회 가능
+                .antMatchers(HttpMethod.DELETE, "/api/messages/receive/{id}/**").access("@messageReceiveGuard.check(#id)") // 받은 메시지는 받은 사람 or ADMIN만 삭제 가능
+                .antMatchers(HttpMethod.DELETE, "/api/messages/send/{id}/**").access("@messageSendGuard.check(#id)") // 보낸 메시지는 보낸 사람 or ADMIN만 삭제 가능
+
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
                 .antMatchers("/swagger-uri/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
                 .and()
                 .userDetailsService(memberDetailsService)
                 .apply(new JwtSecurityConfig(tokenService));// JWT 필터 등록
+
         return http.build();
     }
 }

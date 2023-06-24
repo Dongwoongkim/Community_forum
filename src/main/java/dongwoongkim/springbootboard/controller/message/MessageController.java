@@ -38,6 +38,13 @@ public class MessageController {
         return Response.success(messageService.readAllReceiveMessage(cond));
     }
 
+    @ApiOperation(value = "쪽지 조회", notes = "쪽지를 조회한다.")
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response read(@ApiParam(value = "쪽지 id", required = true) @PathVariable Long id) {
+        return Response.success(messageService.read(id));
+    }
+
     @ApiOperation(value = "메시지 생성", notes = "메시지를 생성합니다.")
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -59,7 +66,7 @@ public class MessageController {
     @DeleteMapping("/receive/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Response deleteByReceive(@ApiParam(value = "받은 메시지 중 삭제할 쪽지 ID") @PathVariable Long id) {
-        messageService.deleteBySender(id);
+        messageService.deleteByReceiver(id);
         return Response.success();
     }
 

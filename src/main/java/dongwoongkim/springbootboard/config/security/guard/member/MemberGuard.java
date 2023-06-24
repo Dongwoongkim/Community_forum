@@ -1,5 +1,6 @@
-package dongwoongkim.springbootboard.config.security.guard;
+package dongwoongkim.springbootboard.config.security.guard.member;
 
+import dongwoongkim.springbootboard.config.security.guard.Guard;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
 import dongwoongkim.springbootboard.helper.AuthHelper;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MemberGuard extends Guard{
+public class MemberGuard extends Guard {
     private final MemberRepository memberRepository;
     @Override
     protected boolean isResourceOwner(Long id) {
