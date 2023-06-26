@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -58,7 +59,6 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.PATCH, "/api/post/{id}/**").access("@postGuard.check(#id)") // 글은 본인이나 admin만 수정가능
 
                 .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("@memberGuard.check(#id)") // 회원 삭제는 본인이나 admin만 가능
-
                 .antMatchers(HttpMethod.DELETE, "/api/comments/{id}/**").access("@commentGuard.check(#id)") // 댓글은 본인이나 admin만 삭제가능
 
                 .antMatchers(HttpMethod.GET, "/api/messages/{id}").access("@messageGuard.check(#id)") // 쪽지는 받은사람 or 보낸사람 or ADMIN만 조회 가능
@@ -67,6 +67,8 @@ public class SecurityConfig {
 
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
                 .antMatchers("/swagger-uri/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
+
+
                 .and()
                 .userDetailsService(memberDetailsService)
                 .apply(new JwtSecurityConfig(tokenService));// JWT 필터 등록

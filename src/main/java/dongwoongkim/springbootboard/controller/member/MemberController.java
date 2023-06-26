@@ -44,5 +44,4 @@ public class MemberController {
         return Response.success(memberService.getMemberWithAuthoritiesForAdmin(id));
     }
 
-
 }

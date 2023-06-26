@@ -15,6 +15,7 @@ import dongwoongkim.springbootboard.repository.member.RoleRepository;
 import dongwoongkim.springbootboard.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -47,7 +48,7 @@ public class SignService {
                 passwordEncoder.encode(signUpRequestDto.getPassword()),
                 signUpRequestDto.getNickname(),
                 signUpRequestDto.getEmail(),
-                List.of(roleRepository.findByRoleType(RoleType.USER).orElseThrow(() -> new RoleNotFoundException("해당 권한을 찾을 수 없습니다"))));
+                List.of(roleRepository.findByRoleType(RoleType.USER).orElseThrow(RoleNotFoundException::new)));
         memberRepository.save(member);
     }
 
@@ -58,7 +59,7 @@ public class SignService {
             String jwt = jwtLoginRequest(loginRequestDto, privateClaims);
             return LogInResponseDto.toDto(jwt);
         }
-        throw new MemberNotFoundException("요청한 회원은 존재하지 않습니다.");
+        throw new MemberNotFoundException();
     }
 
     private TokenService.PrivateClaims createPrivateClaims(Member member) {
@@ -75,23 +76,30 @@ public class SignService {
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken); // loadUserByUsername 메소드 실행
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        try {
 
-        // 토큰 생성 및 리턴
-        String jwt = tokenService.createAccessToken(authentication, privateClaims);
-        if (!StringUtils.hasText(jwt)) {
-            throw new LoginFailureException("로그인에 실패하였습니다.");
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken); // loadUserByUsername 메소드 실행
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+            // 토큰 생성 및 리턴
+            String jwt = tokenService.createAccessToken(authentication, privateClaims);
+            if (!StringUtils.hasText(jwt)) {
+                throw new LoginFailureException();
+            }
+            return jwt;
+
+        } catch (BadCredentialsException e) {
+            throw new LoginFailureException();
         }
-        return jwt;
+
     }
 
     private void validateDuplicateSingUpInfo(SignUpRequestDto signUpRequestDto) {
         Member member = memberRepository.findOneWithRolesByUsername(signUpRequestDto.getUsername()).orElse(null);
         if (member != null) {
-            throw new DuplicateUsernameException("해당 아이디는 이미 등록된 아이디입니다.");
+            throw new DuplicateUsernameException();
         } else if (memberRepository.existsByEmail(signUpRequestDto.getEmail())) {
-            throw new DuplicateEmailException("해당 이메일은 이미 등록된 이메일입니다.");
+            throw new DuplicateEmailException();
         }
     }
 

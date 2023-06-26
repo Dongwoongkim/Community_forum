@@ -1,5 +1,6 @@
 package dongwoongkim.springbootboard.filter;
 
+import dongwoongkim.springbootboard.exception.auth.ValidateTokenException;
 import dongwoongkim.springbootboard.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
@@ -25,6 +27,7 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         String jwt = extractTokenFromRequest(httpServletRequest);
 
         if (validateAccessToken(jwt)) {
@@ -49,7 +52,6 @@ public class JwtFilter extends GenericFilterBean {
 
     private String resolveToken(String bearer_token) {
         if (StringUtils.hasText(bearer_token) && bearer_token.startsWith("Bearer ")) {
-            log.info("검증중");
             return bearer_token.substring(7);
         }
         return null;

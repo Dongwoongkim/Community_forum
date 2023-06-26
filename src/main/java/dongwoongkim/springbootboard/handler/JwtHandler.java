@@ -85,6 +85,7 @@ public class JwtHandler implements InitializingBean {
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
         }
-        throw new ValidateTokenException("비정상적인 시도입니다.");
+
+        throw new ValidateTokenException();
     }
 }

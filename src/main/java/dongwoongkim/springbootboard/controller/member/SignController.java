@@ -29,9 +29,8 @@ public class SignController {
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     public Response signup(@Valid @RequestBody SignUpRequestDto signUpRequestDtoDto, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
-            throw new InputFormException("회원가입 폼 형식에 맞지 않습니다");
+            throw new InputFormException();
         }
         signService.signUp(signUpRequestDtoDto);
         return Response.success();

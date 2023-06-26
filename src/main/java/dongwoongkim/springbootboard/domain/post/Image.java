@@ -1,6 +1,7 @@
 package dongwoongkim.springbootboard.domain.post;
 
 import dongwoongkim.springbootboard.dto.post.image.ImageDto;
+import dongwoongkim.springbootboard.exception.image.CannotFindExtException;
 import dongwoongkim.springbootboard.exception.image.UnsupportedImageFormatException;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -58,13 +59,14 @@ public class Image {
     }
 
     private String extractExtension(String originName) {
+
         try {
             String ext = originName.substring(originName.lastIndexOf(".") + 1);
             if (supportFormat(ext)) {
                 return ext;
             }
         } catch (StringIndexOutOfBoundsException e) {}
-        throw new UnsupportedImageFormatException();
+        throw new CannotFindExtException();
     }
 
     private boolean supportFormat(String ext) {

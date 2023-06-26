@@ -11,12 +11,18 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class MemberDetails implements UserDetails {
+
     private final String id;
     private final List<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class MemberDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id;
+        return null;
     }
 
     @Override

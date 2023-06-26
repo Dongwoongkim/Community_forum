@@ -34,7 +34,7 @@ public class NestedConvertHelper<K,E,D> {
         try {
             return convertInternal();
         } catch (NullPointerException e) {
-            throw new CannotConvertNestedStructureException(e.getMessage());
+            throw new CannotConvertNestedStructureException();
         }
     }
 

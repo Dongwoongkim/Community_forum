@@ -2,6 +2,8 @@ package dongwoongkim.springbootboard.service.member;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.dto.member.MemberResponseDto;
+import dongwoongkim.springbootboard.exception.auth.AccessDeniedException;
+import dongwoongkim.springbootboard.exception.auth.AuthenticationEntryPointException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.util.SecurityUtil;
@@ -18,8 +20,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public MemberResponseDto getMemberWithAuthoritiesForUser() {
-        return MemberResponseDto.toDto(SecurityUtil.getCurrentUsername()
-                .flatMap(memberRepository::findOneWithRolesByUsername).orElseThrow(MemberNotFoundException::new));
+        Long id = Long.valueOf(SecurityUtil.getCurrentUserId().orElseThrow(AuthenticationEntryPointException::new));
+        return MemberResponseDto.toDto(memberRepository.findOneWithRolesById(id).orElseThrow(MemberNotFoundException::new));
     }
 
     public MemberResponseDto getMemberWithAuthoritiesForAdmin(Long id) {
