@@ -8,7 +8,6 @@ import dongwoongkim.springbootboard.exception.message.MessageNotFoundException;
 import dongwoongkim.springbootboard.factory.member.MemberFactory;
 import dongwoongkim.springbootboard.factory.message.MessageFactory;
 import dongwoongkim.springbootboard.repository.member.MemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static dongwoongkim.springbootboard.factory.category.CategoryFactory.createCategory;
 
 @Component
 @RequiredArgsConstructor
@@ -90,7 +89,7 @@ public class initDB {
 
         Member member = memberRepository.findAll().get(0);
         Category category = categoryRepository.findAll().get(0);
-        for (int i = 0; i < 2500; i++) {
+        for (int i = 0; i < 100; i++) {
             String title = "title" + i;
             String content = "content " + i;
             postRepository.save(new Post(title, content, 10000L, member, category, List.of()));

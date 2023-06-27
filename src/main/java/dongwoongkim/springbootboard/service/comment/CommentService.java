@@ -1,6 +1,7 @@
 package dongwoongkim.springbootboard.service.comment;
 
 import dongwoongkim.springbootboard.domain.comment.Comment;
+import dongwoongkim.springbootboard.dto.alarm.AlarmInfoDto;
 import dongwoongkim.springbootboard.dto.comment.CommentCreateRequestDto;
 import dongwoongkim.springbootboard.dto.comment.CommentResponseDto;
 import dongwoongkim.springbootboard.dto.comment.cond.CommentReadCondition;
@@ -8,7 +9,9 @@ import dongwoongkim.springbootboard.exception.comment.CommentNotFoundException;
 import dongwoongkim.springbootboard.repository.member.MemberRepository;
 import dongwoongkim.springbootboard.repository.comment.CommentRepository;
 import dongwoongkim.springbootboard.repository.post.PostRepository;
+import dongwoongkim.springbootboard.service.alarm.AlarmService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,9 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
 
+    // 단일 책임원칙에 의거하여 알람 서비스 분리
+    private final ApplicationEventPublisher publisher;
+
     // readAll
     public List<CommentResponseDto> readAll(CommentReadCondition cond) {
         List<Comment> comments = commentRepository.findAllWithMemberAndParentByPostIdOrderByParentIdAscNullsFirstCommentIdAsc(cond.getPostId());
@@ -33,7 +39,8 @@ public class CommentService {
     // create
     @Transactional
     public void create(@Valid CommentCreateRequestDto commentRequestCreateDto) {
-        commentRepository.save(Comment.toEntity(commentRequestCreateDto, postRepository, memberRepository, commentRepository));
+        Comment comment = commentRepository.save(Comment.toEntity(commentRequestCreateDto, postRepository, memberRepository, commentRepository));
+        comment.createAlarm(publisher);
     }
 
     // delete

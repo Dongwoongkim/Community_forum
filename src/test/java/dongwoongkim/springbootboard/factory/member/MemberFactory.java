@@ -2,6 +2,8 @@ package dongwoongkim.springbootboard.factory.member;
 
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.role.RoleType;
+import org.springframework.data.util.ReflectionUtils;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,5 +26,11 @@ public class MemberFactory {
         return new Member("receiver", "", "receiveUser", "e2@naver.com", emptyList());
     }
 
+    // MemberFactory.java
+    public static Member createMemberWithId(Long id) {
+        Member member = new Member("email@email.com", "123456a!", "username", "nickname", emptyList());
+        ReflectionTestUtils.setField(member, "id", id);
+        return member;
+    }
 
 }

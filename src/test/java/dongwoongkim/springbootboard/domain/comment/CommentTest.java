@@ -1,7 +1,5 @@
 package dongwoongkim.springbootboard.domain.comment;
 
-import dongwoongkim.springbootboard.factory.comment.CommentFactory;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -9,10 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static dongwoongkim.springbootboard.factory.comment.CommentFactory.createComment;
-import static dongwoongkim.springbootboard.factory.member.MemberFactory.createMember;
 import static dongwoongkim.springbootboard.factory.post.PostFactory.createPost;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CommentTest {
 

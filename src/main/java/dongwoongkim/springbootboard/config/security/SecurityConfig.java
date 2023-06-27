@@ -61,13 +61,13 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE, "/api/member/{id}/**").access("@memberGuard.check(#id)") // 회원 삭제는 본인이나 admin만 가능
                 .antMatchers(HttpMethod.DELETE, "/api/comments/{id}/**").access("@commentGuard.check(#id)") // 댓글은 본인이나 admin만 삭제가능
 
-                .antMatchers(HttpMethod.GET, "/api/messages/{id}").access("@messageGuard.check(#id)") // 쪽지는 받은사람 or 보낸사람 or ADMIN만 조회 가능
+                .antMatchers(HttpMethod.GET, "/api/messages/send", "/api/messages/receive").authenticated() // 수신 및 송신 쪽지 전체 조회는 토큰 인증
+                .antMatchers(HttpMethod.GET, "/api/messages/{id}").access("@messageGuard.check(#id)") // 쪽지 id 조회는 받은사람 or 보낸사람 or ADMIN만 조회 가능
                 .antMatchers(HttpMethod.DELETE, "/api/messages/receive/{id}/**").access("@messageReceiveGuard.check(#id)") // 받은 메시지는 받은 사람 or ADMIN만 삭제 가능
                 .antMatchers(HttpMethod.DELETE, "/api/messages/send/{id}/**").access("@messageSendGuard.check(#id)") // 보낸 메시지는 보낸 사람 or ADMIN만 삭제 가능
 
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
                 .antMatchers("/swagger-uri/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
-
 
                 .and()
                 .userDetailsService(memberDetailsService)

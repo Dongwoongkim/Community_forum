@@ -4,6 +4,9 @@ import dongwoongkim.springbootboard.domain.base.BaseEntity;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.post.Post;
 import dongwoongkim.springbootboard.dto.comment.CommentCreateRequestDto;
+import dongwoongkim.springbootboard.dto.member.MemberDto;
+import dongwoongkim.springbootboard.event.comment.CommentCreatedEvent;
+import dongwoongkim.springbootboard.exception.comment.CommentNotFoundException;
 import dongwoongkim.springbootboard.exception.member.MemberNotFoundException;
 import dongwoongkim.springbootboard.exception.post.PostNotFoundException;
 import dongwoongkim.springbootboard.repository.member.MemberRepository;
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.context.ApplicationEventPublisher;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -97,7 +101,19 @@ public class Comment extends BaseEntity {
         return new Comment(commentRequestCreateDto.getContent(),
                 memberRepository.findById(commentRequestCreateDto.getMemberId()).orElseThrow(MemberNotFoundException::new),
                 postRepository.findById(commentRequestCreateDto.getPostId()).orElseThrow(PostNotFoundException::new),
-                commentRepository.findById(commentRequestCreateDto.getParentCommentId()).orElse(null)
+                Optional.ofNullable(
+                        commentRepository.findById(commentRequestCreateDto.getParentCommentId()).orElseThrow(CommentNotFoundException::new)).orElse(null)
+
         );
+    }
+
+    public void createAlarm(ApplicationEventPublisher publisher) {
+        publisher.publishEvent(
+                new CommentCreatedEvent(MemberDto.toDto(getMember()),
+                        Optional.ofNullable(getParent()).map(p -> p.getMember()).map(m -> MemberDto.toDto(m)).orElseGet(()-> MemberDto.empty()),
+                        MemberDto.toDto(getPost().getMember()),
+                        getContent()
+        ));
+
     }
 }

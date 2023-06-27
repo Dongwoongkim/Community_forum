@@ -26,4 +26,7 @@ public class MemberDto {
                 member.getNickname(),
                 member.getEmail());
     }
+    public static MemberDto empty() {
+        return new MemberDto(null, "", "", "");
+    }
 }

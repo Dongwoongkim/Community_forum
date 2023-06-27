@@ -55,11 +55,13 @@ public class ExceptionAdvice {
     public Response illegalAuthenticationException(IllegalAuthenticationException e) {
         return Response.failure(401, "유효하지 않은 권한입니다.");
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Response accessDeniedException(AccessDeniedException e) {
         return Response.failure(401, "접근 불가능한 권한 입니다.");
     }
+
 
     @ExceptionHandler(AuthenticationEntryPointException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -83,7 +85,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(CannotConvertNestedStructureException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response cannotConvertNestedStructureException(CannotConvertNestedStructureException e) {
-        return Response.failure(500, "카테고리를 변경할 수 없습니다.");
+        return Response.failure(500, "목록을 계층형 구조로 변경할 수 없습니다.");
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)

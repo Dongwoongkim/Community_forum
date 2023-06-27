@@ -4,8 +4,6 @@ import dongwoongkim.springbootboard.domain.category.Category;
 import dongwoongkim.springbootboard.domain.member.Member;
 import dongwoongkim.springbootboard.domain.post.Image;
 import dongwoongkim.springbootboard.domain.post.Post;
-import dongwoongkim.springbootboard.factory.category.CategoryFactory;
-import dongwoongkim.springbootboard.factory.member.MemberFactory;
 
 import java.util.List;
 
