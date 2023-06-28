@@ -10,15 +10,13 @@ spring:
     properties:
       hibernate:
         show_sql: true
-        format_sql: false
         default_batch_fetch_size: 100
-
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-logging.level:
-  org.hibernate.SQL:
+  messages:
+    basename: exp/messages
 
 jwt:
   secret:  cmxhZWhkZG5kZG1sdG12bWZsZHJoZHFudm1maHdwcnhtdAo= # echo 'rlaehddnddmltmvmfldrhdqnvmfhwprxmt'|base64
